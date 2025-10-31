@@ -1,5 +1,27 @@
-[gd_scene format=3 uid="uid://dulyebcjgqjaq"]
+[gd_scene load_steps=4 format=3 uid="uid://dulyebcjgqjaq"]
+
+[ext_resource type="Script" uid="uid://cowo6uge5vpy2" path="res://addons/2025_10_31_gdp_warcraft_like_character_move/scripts/core/MovePlayersFromInput.gd" id="1_euj4r"]
+[ext_resource type="Script" uid="uid://dp7ueglywx6w" path="res://addons/2025_10_31_gdp_warcraft_like_character_move/scripts/core/debug_champion_local_player.gd" id="2_6j2wd"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6j2wd"]
 
 [node name="Node3D" type="Node3D"]
 
-[node name="NodePlayerAsArray" type="Node" parent="."]
+[node name="NodePlayerAsArray" type="Node" parent="." node_paths=PackedStringArray("players_debug_nodes_in_game")]
+script = ExtResource("1_euj4r")
+players_debug_nodes_in_game = [NodePath("../Node3D")]
+
+[node name="DebugChampionLocalPlayer" type="Node" parent="." node_paths=PackedStringArray("pool_to_affect")]
+script = ExtResource("2_6j2wd")
+pool_to_affect = NodePath("../NodePlayerAsArray")
+metadata/_custom_type_script = "uid://dp7ueglywx6w"
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("CapsuleMesh_6j2wd")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.4127965)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

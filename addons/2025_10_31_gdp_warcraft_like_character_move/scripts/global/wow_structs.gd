@@ -21,6 +21,12 @@ class STRUCT_WowPlayerState extends Resource:
 	@export var mount_state := ENUM_WowMountState.WALKING
 
 
+class STRUCT_WowPlayerLifeManaState extends Resource:
+	@export var current_health := 100
+	@export var current_mana := 100
+
+
+
 class STRUCT_WowServerMoveConfiguration extends Resource:
 	# Represent a configurable speed for each movement type
 	@export var ground_move_forward:=7
@@ -55,7 +61,7 @@ class STRUCT_WowServerMoveConfiguration extends Resource:
 	@export var steady_fly_rotate_right_degree:=180
 	@export var steady_fly_rotate_down_degree:=180
 	@export var steady_fly_rotate_up_degree:=180
-	
+
 	@export var swimming_move_front:=7
 	@export var swimming_move_backward:=7
 	@export var swimming_move_left:=7
