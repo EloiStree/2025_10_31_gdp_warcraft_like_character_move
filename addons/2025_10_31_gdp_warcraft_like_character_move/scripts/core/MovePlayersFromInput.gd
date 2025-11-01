@@ -11,6 +11,8 @@ class_name MovePlayersFromInput
 @export var players_debug_nodes_in_game : Array[Node3D] = []
 @export var default_reset_start_point : Node3D
 
+signal on_new_player_append(player_claim_index:int, player_array_index:int)
+
 
 func _ready()->void:
 	speed_move_params = WowStructs.STRUCT_WowServerMoveConfiguration.new()
@@ -30,6 +32,7 @@ func append_player_space(claim_index:int)->int:
 	players_input_in_game.append(new_input)
 	var new_life_mana = WowStructs.STRUCT_WowPlayerLifeManaState.new()
 	players_life_mana_in_game.append(new_life_mana)
+	on_new_player_append.emit(claim_index, new_mapping.array_index)
 	return new_mapping.array_index
 
 
@@ -124,9 +127,9 @@ func _process(delta:float)->void:
 		var state = players_state_in_game[i]
 		var input = players_input_in_game[i]
 		if input.rotate_left:
-			state.horizontal_rotation_in_map_360_ccw -= speed_move_params.steady_fly_rotate_left_degree * delta
+			state.horizontal_rotation_in_map_360_ccw += speed_move_params.steady_fly_rotate_left_degree * delta
 		if input.rotate_right:
-			state.horizontal_rotation_in_map_360_ccw += speed_move_params.steady_fly_rotate_right_degree * delta
+			state.horizontal_rotation_in_map_360_ccw -= speed_move_params.steady_fly_rotate_right_degree * delta
 		if input.rotate_tilt_up:
 			state.vertical_tilt_rotation_in_degree += speed_move_params.steady_fly_rotate_up_degree * delta
 		if input.rotate_tilt_down:

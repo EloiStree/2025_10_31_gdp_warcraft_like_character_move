@@ -7,9 +7,10 @@
 
 [node name="Node3D" type="Node3D"]
 
-[node name="NodePlayerAsArray" type="Node" parent="." node_paths=PackedStringArray("players_debug_nodes_in_game")]
+[node name="NodePlayerAsArray" type="Node" parent="." node_paths=PackedStringArray("players_debug_nodes_in_game", "default_reset_start_point")]
 script = ExtResource("1_euj4r")
 players_debug_nodes_in_game = [NodePath("../Node3D")]
+default_reset_start_point = NodePath("../NodeStartPoint")
 
 [node name="DebugChampionLocalPlayer" type="Node" parent="." node_paths=PackedStringArray("pool_to_affect")]
 script = ExtResource("2_6j2wd")
@@ -25,3 +26,5 @@ mesh = SubResource("CapsuleMesh_6j2wd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.4127965)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="NodeStartPoint" type="Node3D" parent="."]

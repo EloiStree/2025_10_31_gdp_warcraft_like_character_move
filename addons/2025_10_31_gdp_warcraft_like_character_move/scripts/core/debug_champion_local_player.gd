@@ -21,60 +21,33 @@ class_name DebugChampionLocalPlayer
 func _input(event):
 	if event is InputEventKey:
 		print("Key pressed: %s" % event.as_text())
-
-        if event.as_text() == input_reset_start_position and event.pressed:
-            pool_to_affect.reset_player_position_by_claim_index(claim_index)
-            return
-            
-        elif event.as_text() == input_reset_random_position and event.pressed:
-            var random_pos = Vector3(
-                randf_range(-50, 50),
-                randf_range(10, 50),
-                randf_range(-50, 50)
-            )
-            var player_state :WowStructs.STRUCT_WowPlayerState= pool_to_affect.get_or_create_player_state_by_claim_index(claim_index)
-            player_state.position_in_world = random_pos
-            pool_to_affect.set_player_state_by_claim_index(claim_index, player_state)
-            return
-
+		if event.as_text() == input_reset_start_position and event.pressed:
+			pool_to_affect.reset_player_position_by_claim_index(claim_index)
+			return  
+		if event.as_text() == input_reset_random_position and event.pressed:
+			pool_to_affect.reset_player_at_random_position_by_claim_index(claim_index, 64.0, 32.0)
+			
+			
+			return 
+			
 		var player_input :WowStructs.STRUCT_ChampionMoveInput= pool_to_affect.get_or_create_player_input_by_claim_index(claim_index)
-		var input_vector := Vector3.ZERO
-		var input_rotation:Vector2 = Vector2.ZERO
-		
 		if event.as_text() == input_move_left:
-			input_vector.x = -1.0 if event.pressed else 0.0
+			player_input.move_left = event.is_pressed()
 		elif event.as_text() == input_move_right:
-			input_vector.x = 1.0 if event.pressed else 0.0
+			player_input.move_right = event.is_pressed()
 		elif event.as_text() == input_move_forward:
-			input_vector.z = -1.0 if event.pressed else 0.0
+			player_input.move_forward = event.is_pressed()
 		elif event.as_text() == input_move_backward:
-			input_vector.z = 1.0 if event.pressed else 0.0
+			player_input.move_backward = event.is_pressed()
 		elif event.as_text() == input_move_up:
-			input_vector.y = 1.0 if event.pressed else 0.0
+			player_input.move_up = event.is_pressed()
 		elif event.as_text() == input_move_down:
-			input_vector.y = -1.0 if event.pressed else 0.0
+			player_input.move_down = event.is_pressed()
 		elif event.as_text() == input_rotate_left:
-			input_rotation.x = -1.0 if event.pressed else 0.0
+			player_input.rotate_left = event.is_pressed()
 		elif event.as_text() == input_rotate_right:
-			input_rotation.x = 1.0 if event.pressed else 0.0
-		elif event.as_text() == input_rotate_down:
-			input_rotation.y = -1.0 if event.pressed else 0.0
+			player_input.rotate_right = event.is_pressed()
 		elif event.as_text() == input_rotate_up:
-			input_rotation.y = 1.0 if event.pressed else 0.0
-
-		move_direction = input_vector
-		rotate_direction = input_rotation
-		update_with_vectors_direction(player_input, input_vector, input_rotation)
-
-func update_with_vectors_direction(player_input:WowStructs.STRUCT_ChampionMoveInput, move_dir:Vector3, rotate_dir:Vector2)->void:
-	player_input.move_left = move_dir.x < 0.0
-	player_input.move_right = move_dir.x > 0.0
-	player_input.move_forward = move_dir.z < 0.0
-	player_input.move_backward = move_dir.z > 0.0
-	player_input.move_up = move_dir.y > 0.0
-	player_input.move_down = move_dir.y < 0.0
-	player_input.rotate_left = rotate_dir.x < 0.0
-	player_input.rotate_right = rotate_dir.x > 0.0
-	player_input.rotate_tilt_down = rotate_dir.y < 0.0
-	player_input.rotate_tilt_up = rotate_dir.y > 0.0
-	pool_to_affect.set_player_input_by_claim_index(claim_index, player_input)
+			player_input.rotate_tilt_up = event.is_pressed()
+		elif event.as_text() == input_rotate_down:
+			player_input.rotate_tilt_down = event.is_pressed()
