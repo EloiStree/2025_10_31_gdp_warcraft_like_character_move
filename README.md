@@ -1,10 +1,5 @@
 
 
-```
-git submodule add https://github.com/EloiStree/2025_10_31_gdp_warcraft_like_character_move.git addons/2025_10_31_gdp_warcraft_like_character_move
-git submodule update --init --recursive
-```
-
 # 2025_10_31_gdp_warcraft_like_character_move
 
 > A simple mirror of how a World of Warcraft champion moves, created for an MMO-style coding tournament.
